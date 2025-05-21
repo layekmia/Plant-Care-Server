@@ -78,3 +78,24 @@ exports.deletePlant = async (req, res) => {
   }
 };
 
+exports.updatePlant = async (req, res) => {
+  const id = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid plant ID" });
+  }
+  try {
+    const updated = await Plant.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+
+    if (!updated) {
+      return res.status(404).json({ message: "Plant not found" });
+    }
+    res.status(200).json({ message: "Plant updated", plant: updated });
+  } catch (error) {
+    console.error("Error updating plant:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to update plant", error: error.message });
+  }
+};
