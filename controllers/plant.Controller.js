@@ -57,4 +57,24 @@ exports.getPlantById = async (req, res) => {
   }
 };
 
+exports.deletePlant = async (req, res) => {
+  const id = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid plant ID" });
+  }
+  try {
+    const deleted = await Plant.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return res.status(404).json({ message: "Plant not found" });
+    }
+
+    res.status(200).json({ message: "Plant deleted" });
+  } catch (error) {
+    console.error("Error deleting plant:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to delete plant", error: error.message });
+  }
+};
 
