@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const Plant = require("../models/plant");
 
 exports.createPlant = async (req, res) => {
@@ -35,10 +36,25 @@ exports.getAllPlnats = async (req, res) => {
   }
 };
 
-exports.getPlantsById = async (req, res) => {
-    try {
-        
-    } catch (error) {
-        
+exports.getPlantById = async (req, res) => {
+  const id = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid plant ID" });
+  }
+  try {
+    const plant = await Plant.findById(id);
+
+    if (!plant) {
+      return res.status(404).json({ message: "Plant not found" });
     }
-}
+
+    res.status(200).json(plant);
+  } catch (error) {
+    console.error("Error fetching plant:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to fetch plant", error: error.message });
+  }
+};
+
+
