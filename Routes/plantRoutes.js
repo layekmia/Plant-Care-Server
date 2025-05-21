@@ -3,9 +3,9 @@ const { getAllPlnats, createPlant, getPlantById, deletePlant, updatePlant} = req
 
 const router = express.Router();
 
-plantRoutes.post('/', createPlant);
-plantRoutes.get('/', getAllPlnats);
-plantRoutes.get('/:id', getPlantById);
-plantRoutes.delete('/:id', deletePlant);
-plantRoutes.put('/:id', updatePlant);
+router.post('/', createPlant);
+router.get('/', getAllPlnats);
+router.get('/:id', getPlantById);
+router.delete('/:id', deletePlant);
+router.put('/:id', updatePlant);
 module.exports = router;
