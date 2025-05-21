@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 const Plant = require("../models/plant");
 
 exports.createPlant = async (req, res) => {
@@ -27,7 +27,11 @@ exports.createPlant = async (req, res) => {
 exports.getAllPlnats = async (req, res) => {
   try {
     const plants = await Plant.find();
-    res.status(200).json({status: 200, message: 'successfully retrive the data', data: plants});
+    res.status(200).json({
+      status: 200,
+      message: "successfully retrive the data",
+      data: plants,
+    });
   } catch (error) {
     res.status(500).json({
       message: "Failed to fetch plants",
@@ -54,6 +58,18 @@ exports.getPlantById = async (req, res) => {
     res
       .status(500)
       .json({ message: "Failed to fetch plant", error: error.message });
+  }
+};
+
+exports.getUserPlants = async (req, res) => {
+  try {
+    const { email } = req.query;
+    const plants = await Plant.find({ userEmail: email });
+    res.status(200).json(plants);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Failed to fetch user plants", error: err.message });
   }
 };
 
