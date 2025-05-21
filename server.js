@@ -1,7 +1,7 @@
 const expres = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const plantRoutes = require("./Routes/plantRoutes");
+const router = require("./Routes/plantRoutes");
 require("dotenv").config();
 
 const app = expres();
@@ -11,7 +11,7 @@ app.use(cors());
 const mongodb_URI = process.env.MONGODB_URI;
 const PORT = process.env.PORT;
 
-app.use("/web/api/plants", plantRoutes);
+app.use("/web/api/plants", router);
 
 mongoose
   .connect(mongodb_URI)
