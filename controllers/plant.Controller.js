@@ -27,11 +27,7 @@ exports.createPlant = async (req, res) => {
 exports.getAllPlnats = async (req, res) => {
   try {
     const plants = await Plant.find();
-    res.status(200).json({
-      status: 200,
-      message: "successfully retrive the data",
-      data: plants,
-    });
+    res.json(plants);
   } catch (error) {
     res.status(500).json({
       message: "Failed to fetch plants",
